@@ -43,7 +43,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_folder_name"></a> [folder\_name](#input\_folder\_name) | Folder that the resource belongs to. If value is omitted, the default provider folder is used | `string` | `null` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | Container registry labels | `map(string)` | `{}` | no |
 | <a name="input_members"></a> [members](#input\_members) | The role that should be applied | `list(string)` | <pre>[<br>  "system:allUsers"<br>]</pre> | no |
 | <a name="input_registry"></a> [registry](#input\_registry) | Container registry name | `string` | n/a | yes |

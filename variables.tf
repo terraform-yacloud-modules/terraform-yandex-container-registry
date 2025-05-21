@@ -1,9 +1,3 @@
-variable "folder_name" {
-  description = "Folder that the resource belongs to. If value is omitted, the default provider folder is used"
-  type        = string
-  default     = null
-}
-
 variable "registry" {
   description = "Container registry name"
   type        = string
