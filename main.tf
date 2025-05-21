@@ -1,15 +1,11 @@
-data "yandex_resourcemanager_folder" "this" {
-  count = var.folder_name == "" ? 0 : 1
-  name  = var.folder_name
-}
-
+data "yandex_client_config" "client" {}
 
 ###########
 ## Registry
 ###########
 resource "yandex_container_registry" "this" {
   name      = var.registry
-  folder_id = var.folder_name == "" ? null : data.yandex_resourcemanager_folder.this[0].id
+  folder_id = data.yandex_client_config.client.folder_id
 
   labels = var.labels == null ? { project = var.registry } : var.labels
 }
