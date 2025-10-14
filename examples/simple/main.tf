@@ -10,6 +10,12 @@ module "cr" {
   role    = "puller"
   members = ["system:allUsers"]
 
+  timeouts = {
+    create = "40m"
+    update = "40m"
+    delete = "40m"
+  }
+
   repos = {
     "frontend" = {
       role = "pusher"

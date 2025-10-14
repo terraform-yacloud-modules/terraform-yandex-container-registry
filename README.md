@@ -48,6 +48,7 @@ No modules.
 | <a name="input_registry"></a> [registry](#input\_registry) | Container registry name | `string` | n/a | yes |
 | <a name="input_repos"></a> [repos](#input\_repos) | Repositories with role binding and lifecycle\_policy | `map(any)` | `{}` | no |
 | <a name="input_role"></a> [role](#input\_role) | The role that should be applied | `string` | `"puller"` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Timeout settings for cluster operations | <pre>object({<br/>    create = optional(string)<br/>    update = optional(string)<br/>    delete = optional(string)<br/>  })</pre> | `null` | no |
 
 ## Outputs
 

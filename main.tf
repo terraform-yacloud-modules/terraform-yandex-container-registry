@@ -8,6 +8,17 @@ resource "yandex_container_registry" "this" {
   folder_id = data.yandex_client_config.client.folder_id
 
   labels = var.labels == null ? { project = var.registry } : var.labels
+
+
+  dynamic "timeouts" {
+    for_each = var.timeouts == null ? [] : [var.timeouts]
+    content {
+      create = try(timeouts.value.create, null)
+      update = try(timeouts.value.update, null)
+      delete = try(timeouts.value.delete, null)
+    }
+  }
+
 }
 
 resource "yandex_container_registry_iam_binding" "this" {
@@ -22,6 +33,17 @@ resource "yandex_container_registry_iam_binding" "this" {
 resource "yandex_container_repository" "this" {
   for_each = var.repos
   name     = "${yandex_container_registry.this.id}/${each.key}"
+
+  dynamic "timeouts" {
+    for_each = var.timeouts == null ? [] : [var.timeouts]
+    content {
+      create = try(timeouts.value.create, null)
+      update = try(timeouts.value.update, null)
+      delete = try(timeouts.value.delete, null)
+    }
+  }
+
+
 }
 
 resource "yandex_container_repository_iam_binding" "this" {
@@ -51,4 +73,5 @@ resource "yandex_container_repository_lifecycle_policy" "this" {
     # The number of images to be retained even if the expire_period already expired
     retained_top = lookup(each.value["lifecycle_policy"], "retained_top", 1)
   }
+
 }
