@@ -45,3 +45,18 @@ variable "timeouts" {
   })
   default = null
 }
+
+variable "folder_id" {
+  description = "The folder ID where the registry will be created. If not provided, uses the default folder from the provider configuration"
+  type        = string
+  default     = null
+}
+
+variable "registry_ip_permission" {
+  description = "IP permission settings for the container registry"
+  type = object({
+    push = optional(list(string))
+    pull = optional(list(string))
+  })
+  default = null
+}

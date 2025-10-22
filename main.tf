@@ -5,7 +5,7 @@ data "yandex_client_config" "client" {}
 ###########
 resource "yandex_container_registry" "this" {
   name      = var.registry
-  folder_id = data.yandex_client_config.client.folder_id
+  folder_id = coalesce(var.folder_id, data.yandex_client_config.client.folder_id)
 
   labels = var.labels == null ? { project = var.registry } : var.labels
 
@@ -25,6 +25,15 @@ resource "yandex_container_registry_iam_binding" "this" {
   registry_id = yandex_container_registry.this.id
   role        = "container-registry.images.${var.role}"
   members     = var.members
+}
+
+resource "yandex_container_registry_ip_permission" "this" {
+  count = var.registry_ip_permission != null ? 1 : 0
+
+  registry_id = yandex_container_registry.this.id
+
+  push = try(var.registry_ip_permission.push, [])
+  pull = try(var.registry_ip_permission.pull, [])
 }
 
 #############

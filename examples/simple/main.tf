@@ -10,6 +10,11 @@ module "cr" {
   role    = "puller"
   members = ["system:allUsers"]
 
+  registry_ip_permission = {
+    push = ["192.168.1.0/24"]
+    pull = ["10.0.0.0/16", "172.16.0.0/12"]
+  }
+
   timeouts = {
     create = "40m"
     update = "40m"
