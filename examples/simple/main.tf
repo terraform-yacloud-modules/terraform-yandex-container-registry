@@ -48,7 +48,7 @@ module "cr" {
         description   = "Cleanup policy for worker images"
         expire_period = "24h" # 1 день
         untagged      = true
-        tag_regexp    = "latest"
+        tag_regexp    = "latest" # или .*
         retained_top  = 1
       }
     }
