@@ -5,7 +5,7 @@ variable "defaults" {
 }
 
 variable "items" {
-  description = "Maps of items to create a wrapper from. Each item must include 'registry'."
+  description = "Map of items to create a wrapper from. Each item must include 'registry'."
   type        = any
   default     = {}
 }
