@@ -49,7 +49,7 @@ variable "repos" {
   validation {
     condition = alltrue([
       for repo_name, repo_config in var.repos :
-      contains(["puller", "pusher", "admin"], lookup(repo_config, "role", "puller"))
+      contains(["puller", "pusher", "admin"], try(repo_config.role, "puller"))
     ])
     error_message = "Repository role must be one of `puller`, `pusher` or `admin`."
   }
