@@ -66,7 +66,7 @@ inputs = {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | defaults | Map of default values which will be used for each item | `any` | `{}` | no |
-| items | Maps of items to create a wrapper from. Each item must include 'registry' | `any` | `{}` | no |
+| items | Maps of items to create a wrapper from. Each item may include 'registry'; if omitted, the key name will be used as the registry name | `any` | `{}` | no |
 
 ## Outputs
 
