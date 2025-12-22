@@ -7,6 +7,11 @@ module "cr" {
 
   registry = "test"
 
+  labels = {
+    environment = "dev"
+    team        = "devops"
+  }
+
   role    = "puller"
   members = ["system:allUsers"]
 
@@ -17,6 +22,7 @@ module "cr" {
 
   timeouts = {
     create = "40m"
+    read   = "40m"
     update = "40m"
     delete = "40m"
   }

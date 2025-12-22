@@ -13,6 +13,7 @@ resource "yandex_container_registry" "this" {
     for_each = var.timeouts == null ? [] : [var.timeouts]
     content {
       create = try(timeouts.value.create, null)
+      read   = try(timeouts.value.read, null)
       update = try(timeouts.value.update, null)
       delete = try(timeouts.value.delete, null)
     }
@@ -45,6 +46,7 @@ resource "yandex_container_repository" "this" {
     for_each = var.timeouts == null ? [] : [var.timeouts]
     content {
       create = try(timeouts.value.create, null)
+      read   = try(timeouts.value.read, null)
       update = try(timeouts.value.update, null)
       delete = try(timeouts.value.delete, null)
     }
