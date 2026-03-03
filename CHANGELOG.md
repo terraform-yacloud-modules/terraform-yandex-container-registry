@@ -1,3 +1,7 @@
+## v0.49.0 - 2026-03-03
+### Miscellaneous
+- 99d8011 build(deps): bump hashicorp/setup-terraform from 3 to 4 ([#51](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/51))
+
 ## v0.48.0 - 2026-02-24
 ### Miscellaneous
 - 7cc5b8d build(deps): bump kvendingoldo/git-flow-action from 2.2.0 to 2.16.0 ([#50](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/50))
