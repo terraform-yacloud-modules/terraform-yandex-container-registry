@@ -21,7 +21,7 @@ resource "yandex_container_registry" "this" {
 }
 
 resource "yandex_container_registry_iam_binding" "this" {
-  count = var.members != [] ? 1 : 0
+  count = length(var.members) > 0 ? 1 : 0
 
   registry_id = yandex_container_registry.this.id
   role        = "container-registry.images.${var.role}"
