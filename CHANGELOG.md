@@ -1,3 +1,7 @@
+## v0.50.0 - 2026-03-25
+### Miscellaneous
+- daeb357 build(deps): bump actions/cache from 5.0.3 to 5.0.4 ([#53](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/53))
+
 ## v0.49.0 - 2026-03-03
 ### Miscellaneous
 - 99d8011 build(deps): bump hashicorp/setup-terraform from 3 to 4 ([#51](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/51))
