@@ -1,3 +1,7 @@
+## v0.51.0 - 2026-04-14
+### Miscellaneous
+- 366cf98 build(deps): bump actions/cache from 5.0.4 to 5.0.5 ([#54](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/54))
+
 ## v0.50.0 - 2026-03-25
 ### Miscellaneous
 - daeb357 build(deps): bump actions/cache from 5.0.3 to 5.0.4 ([#53](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/53))
