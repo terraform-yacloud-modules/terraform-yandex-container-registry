@@ -1,3 +1,7 @@
+## v0.54.0 - 2026-08-04
+### Miscellaneous
+- 70874f6 build(deps): bump bridgecrewio/checkov-action from 12 to 12.3114.0 ([#57](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/57))
+
 ## v0.53.0 - 2026-06-30
 ### Miscellaneous
 - 7265b5b build(deps): bump actions/cache from 5.0.5 to 6.1.0 ([#56](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/56))
