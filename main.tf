@@ -21,6 +21,8 @@ resource "yandex_container_registry" "this" {
 }
 
 resource "yandex_container_registry_iam_binding" "this" {
+  count = length(var.members) > 0 ? 1 : 0
+
   registry_id = yandex_container_registry.this.id
   role        = "container-registry.images.${var.role}"
   members     = var.members
@@ -54,7 +56,7 @@ resource "yandex_container_repository" "this" {
 }
 
 resource "yandex_container_repository_iam_binding" "this" {
-  for_each = var.repos
+  for_each = { for k, v in var.repos : k => v if length(try(v.members, ["system:allUsers"])) > 0 }
 
   repository_id = yandex_container_repository.this[each.key].id
   role          = "container-registry.images.${try(each.value.role, "puller")}"
