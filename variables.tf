@@ -41,10 +41,61 @@ variable "role" {
   }
 }
 
+variable "iam_bindings" {
+  description = "Additional registry-level IAM bindings as a map of binding name to role and members. Applied in addition to `role` and `members`"
+  type = map(object({
+    role    = string
+    members = list(string)
+  }))
+  default = {}
+
+  validation {
+    condition = alltrue([
+      for binding in values(var.iam_bindings) :
+      contains(["puller", "pusher", "admin"], binding.role)
+    ])
+    error_message = "IAM binding role must be one of `puller`, `pusher` or `admin`."
+  }
+
+  validation {
+    condition = alltrue([
+      for binding in values(var.iam_bindings) :
+      alltrue([
+        for member in binding.members :
+        can(regex("^(system:allUsers|system:allAuthenticatedUsers|userAccount:|serviceAccount:|federation:|group:|allUsers|allAuthenticatedUsers)", member))
+      ])
+    ])
+    error_message = "IAM binding members must be in valid format: system:allUsers, system:allAuthenticatedUsers, userAccount:{user_id}, serviceAccount:{service_account_id}, federation:{federation_id}, group:{group_id}, allUsers, or allAuthenticatedUsers."
+  }
+}
+
 variable "repos" {
-  description = "Repositories with role binding and lifecycle_policy"
-  type        = map(any)
-  default     = {}
+  description = "Repositories with role binding, additional iam_bindings and lifecycle_policy (single rule fields or a list of rules)"
+  type = map(object({
+    role    = optional(string, "puller")
+    members = optional(list(string), ["system:allUsers"])
+    iam_bindings = optional(map(object({
+      role    = string
+      members = list(string)
+    })), {})
+    lifecycle_policy = optional(object({
+      name          = optional(string, "")
+      status        = optional(string, "active")
+      description   = optional(string, "")
+      expire_period = optional(string, "24h")
+      untagged      = optional(bool, true)
+      tag_regexp    = optional(string, ".*")
+      retained_top  = optional(number, 1)
+      rules = optional(list(object({
+        description   = optional(string, "")
+        expire_period = optional(string, "24h")
+        untagged      = optional(bool, true)
+        tag_regexp    = optional(string, ".*")
+        retained_top  = optional(number, 1)
+      })), [])
+    }), null)
+  }))
+  default = {}
 
   validation {
     condition = alltrue([
@@ -79,6 +130,44 @@ variable "repos" {
       if lookup(repo_config, "lifecycle_policy", null) != null
     ])
     error_message = "Tag regexp must be a valid regular expression."
+  }
+
+  validation {
+    condition = alltrue([
+      for repo_name, repo_config in var.repos :
+      alltrue([
+        for rule in try(repo_config.lifecycle_policy.rules, []) :
+        can(regex("^\\d+h$", lookup(rule, "expire_period", "24h"))) &&
+        (tonumber(replace(lookup(rule, "expire_period", "24h"), "h", "")) % 24 == 0)
+      ])
+      if lookup(repo_config, "lifecycle_policy", null) != null
+    ])
+    error_message = "Each lifecycle rule expire_period must be in format 'Nh' where N is a multiple of 24 (e.g., '24h', '48h', '168h')."
+  }
+
+  validation {
+    condition = alltrue([
+      for repo_name, repo_config in var.repos :
+      alltrue([
+        for binding in values(try(repo_config.iam_bindings, {})) :
+        contains(["puller", "pusher", "admin"], binding.role)
+      ])
+    ])
+    error_message = "Repository IAM binding role must be one of `puller`, `pusher` or `admin`."
+  }
+
+  validation {
+    condition = alltrue([
+      for repo_name, repo_config in var.repos :
+      alltrue([
+        for binding in values(try(repo_config.iam_bindings, {})) :
+        alltrue([
+          for member in binding.members :
+          can(regex("^(system:allUsers|system:allAuthenticatedUsers|userAccount:|serviceAccount:|federation:|group:|allUsers|allAuthenticatedUsers)", member))
+        ])
+      ])
+    ])
+    error_message = "Repository IAM binding members must be in valid format: system:allUsers, system:allAuthenticatedUsers, userAccount:{user_id}, serviceAccount:{service_account_id}, federation:{federation_id}, group:{group_id}, allUsers, or allAuthenticatedUsers."
   }
 }
 
