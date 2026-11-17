@@ -1,3 +1,7 @@
+## v0.69.0 - 2026-11-17
+### Miscellaneous
+- 5c2bf63 build(deps): bump bridgecrewio/checkov-action ([#72](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/72))
+
 ## v0.68.0 - 2026-11-10
 ### Features
 - 42abda7 feat: support multiple IAM bindings and lifecycle rules ([#70](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/70))
