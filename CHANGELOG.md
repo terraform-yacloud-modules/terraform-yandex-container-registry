@@ -1,3 +1,7 @@
+## v0.70.0 - 2026-11-18
+### Miscellaneous
+- 1acdfab ci: run semver job only on push to main ([#73](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/73))
+
 ## v0.69.0 - 2026-11-17
 ### Miscellaneous
 - 5c2bf63 build(deps): bump bridgecrewio/checkov-action ([#72](https://github.com/terraform-yacloud-modules/terraform-yandex-container-registry/pull/72))
